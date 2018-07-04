@@ -1,1 +1,4 @@
 export const RANDOM_EVENT = 'RANDOM_EVENT';
+
+export const REQUEST_SUCCEDED = 'REQUEST_SUCCEDED';
+export const REQUEST_FAILED = 'REQUEST_FAILED';

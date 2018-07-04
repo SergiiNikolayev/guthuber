@@ -1,14 +1,24 @@
 import { takeEvery } from 'redux-saga'
+import { call, put } from 'redux-saga/effects'
 import axios from 'axios';
 
 import * as actionTypes from './../actions/actionTypes'
 
 //1 worker saga, it work when action is dispatched and watcher made call
-export function* randomEventAsync() {
+// call method is used for make axios call
+export function* randomEventAsync(action) {
   try{
-    console.log('at randomEventAsync now')
+    console.log('at randomEventAsync now');
+    //const response = yield call(axios.post, 'https://jsonplaceholder.typicode.com/posts', {items: action.var});
+    const response = yield call(axios.get, 'https://api.github.com/search/repositories?q=stars:>=50000');
+    console.log(response);
+    console.log(action);
+
+    yield put({type: actionTypes.REQUEST_SUCCEDED, responseZ: response.data});
+
   } catch (e) {
-    console.log('at ' + e + ' now')
+    console.log('at ' + e + ' now');
+    yield put({type: actionTypes.REQUEST_FAILED, message: e.message + ' ::something went wrong, bro'});
   }
 }
 
@@ -19,7 +29,7 @@ export function* watchSaga() {
   yield takeEvery(actionTypes.RANDOM_EVENT, randomEventAsync);
 }
 
-//3. root Saga that combines all sags in one
+//3. root Saga that combines all sagas in one
 export default function* rootSaga() {
   yield [
     watchSaga()

@@ -1,7 +1,9 @@
 import * as actionTypes from './../actions/actionTypes'
 
 const initialState = {
-  items: 0
+  items: 0,
+  message: [],
+  id: '*'
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +12,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items + action.var
+      };
+    case actionTypes.REQUEST_SUCCEDED:
+      return {
+        ...state,
+        message: action.responseZ.items
+      };
+    case actionTypes.REQUEST_FAILED:
+      return {
+        ...state,
+        message: action.message
       };
     default:
       return state;
