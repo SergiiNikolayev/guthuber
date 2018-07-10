@@ -3,7 +3,8 @@ import * as actionTypes from './../actions/actionTypes'
 const initialState = {
   items: 0,
   message: [],
-  id: '*'
+  id: '*',
+  search: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items + action.var
+      };
+    case actionTypes.GET_INFO:
+      return {
+        ...state,
+        items: state.items
+      };
+    case actionTypes.SEARCH:
+      return {
+        ...state,
+        search: action.whatWeSearch
       };
     case actionTypes.REQUEST_SUCCEDED:
       return {
